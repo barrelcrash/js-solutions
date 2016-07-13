@@ -1,0 +1,68 @@
+/*
+*Write a function, deepEqual, that takes two values and returns true only if they are the same value or are *objects with the same properties whose values are also equal when compared with a recursive call to deepEqual.
+*
+*To find out whether to compare two things by identity (use the === operator for that) or by looking at their *properties, you can use the typeof operator. If it produces "object" for both values, you should do a deep *comparison. But you have to take one silly exception into account: by a historical accident, typeof null also *produces "object".
+*/
+
+function deepEqual (x, y) {
+  var result = true;
+  
+  function compareObjects(a, b){    
+    //this counting chunk of code can be replaced with the method "Object.keys(a).length", which pulls the number of props in each object
+    
+    var propCount1 = 0;
+    var propCount2 = 0;
+  
+    for (var prop1 in a){
+      propCount1++;
+    }  
+    for (var prop2 in b) {
+      propCount2++;
+    }
+  
+    
+    if (propCount1 ===  propCount2) {
+      //could have used b.hasOwnProperty(prop) to check props against one another - if true, compare to a recursion of the function (which itself will fire false if the child props don't match); if false, return false (ends the loop), else simply return true:
+      /*
+         for (var prop in x) {
+           if (y.hasOwnProperty(prop))
+             {  
+               if (! deepEqual(x[prop], y[prop]))
+                 return false;
+             }
+           else
+             return false;
+         }
+      */
+      
+      for (var prop in a) {
+        if (typeof a[prop] === "object" && typeof b[prop] === "object") {
+          compareObjects(a[prop], b[prop]);         
+        } else if (a[prop] != b[prop]){
+          result = false;
+        } 
+      }
+    }    
+  }
+  
+  if (typeof x === "object" && typeof y === "object") {
+    if (x != null && y != null) {
+      compareObjects(x, y);
+    } else {
+      return false;
+    }
+  } else {
+    return x === y;
+  }  
+  return result;
+}
+
+var obj = {here: {is: "an"}, object: 2};
+console.log(deepEqual(obj, obj));
+// → true
+console.log(deepEqual(obj, {here: 1, object: 2}));
+// → false
+console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
+// → true
+console.log(deepEqual(1,1));
+//   true
