@@ -17,8 +17,7 @@ var arrays = [[1, 2, 3], [4, 5], [6]];
 function flatten (input) {
   return input.reduce(function(res, nextItem) {
 	return res.concat(nextItem);
-  }
-  );
+  });
 }
 
 console.log(flatten(arrays));
