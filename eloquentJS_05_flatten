@@ -1,0 +1,25 @@
+//Use the reduce method in combination with the concat method to “flatten” an array of arrays into a single array that has all the elements of the input arrays.
+//The concat method does not change the existing arrays, but returns a new array, containing the values of the joined arrays.
+
+var arrays = [[1, 2, 3], [4, 5], [6]];
+//first attempt - does not use reduce
+/* function flatten (array) {
+  var newArray = [];  
+  array.forEach(
+    function(subArray) {
+      newArray = newArray.concat(subArray);
+    }
+  );  
+  return newArray;
+} */
+
+//second attempt
+function flatten (input) {
+  return input.reduce(function(res, nextItem) {
+	return res.concat(nextItem);
+  }
+  );
+}
+
+console.log(flatten(arrays));
+// → [1, 2, 3, 4, 5, 6]
