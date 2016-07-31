@@ -1,5 +1,7 @@
 /*jshint esnext: true */
 
+// solution for https://www.reddit.com/r/dailyprogrammer/comments/4so25w/20160713_challenge_275_intermediate_splurthian/
+
 let elements = [
   'Hydrogen',
   'Helium',
