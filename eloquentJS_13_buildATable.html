@@ -1,0 +1,45 @@
+<style>
+  /* Defines a cleaner look for tables */
+  table  { border-collapse: collapse; }
+  td, th { border: 1px solid black; padding: 3px 8px; }
+  th     { text-align: left; }
+</style>
+
+<script>
+  function buildTable(data) {    
+    function buildTableRow(item, type) {
+      let row = document.createElement('tr');
+      if (type === 'th') {
+        Object.keys(item).forEach(function(key) {
+          let cell = document.createElement(type);
+          cell.appendChild(document.createTextNode(key));
+          row.appendChild(cell);
+        });
+      } else {
+        for (var prop in item) {
+          let cell = document.createElement(type);
+          let cellContent = document.createTextNode(item[prop]);
+          if (typeof item[prop] === 'number') {
+            cell.style = 'text-align: right';
+          }
+          cell.appendChild(cellContent);
+          row.appendChild(cell);
+        }
+      }
+      return row;
+    }
+    
+    var tableRows = data.length + 1;
+    var table = document.createElement('table');
+    
+    data.forEach(function(datum, i) {
+      if (i === 0) {
+      	table.appendChild(buildTableRow(datum, 'th'));
+      }
+      table.appendChild(buildTableRow(datum, 'td'));
+    });
+    return table;
+  }
+
+  document.body.appendChild(buildTable(MOUNTAINS));
+</script>
